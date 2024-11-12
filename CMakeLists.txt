@@ -5,7 +5,11 @@ set(CMAKE_CXX_STANDARD 23)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-add_executable(bloom_engine src/main.cpp)
+add_executable(bloom_engine src/main.cpp
+        src/keys.h
+        src/glad.c
+        src/engine.cpp
+        src/engine.h)
 
 # GLFW INCLUDE
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
