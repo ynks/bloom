@@ -3,7 +3,6 @@
 #include <iostream>
 
 #include "keys.h"
-#include "engine.h"
 
 // Function prototypes
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -14,7 +13,7 @@ int main()
     // Initialize OpenGL
     if (!glfwInit())
     {
-        std::cout << "Failed to initialize GLFW" << std::endl;
+        std::cerr << "Failed to initialize GLFW" << std::endl;
         return -1;
     }
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -25,19 +24,17 @@ int main()
     GLFWwindow* window = glfwCreateWindow(Keys::Engine::SCR_WIDTH, Keys::Engine::SCR_HEIGHT, Keys::Engine::SCR_TITLE, nullptr, nullptr);
     if (window == nullptr)
     {
-        std::cout << "Failed to create window" << std::endl;
+        std::cerr << "Failed to create window" << std::endl;
         glfwTerminate();
         return -1;
     }
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    bloom::Engine bloom(window);
-
     // GLAD initialization
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        std::cout << "Failed to initialize GLAD" << std::endl;
+        std::cerr << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
 
@@ -45,8 +42,6 @@ int main()
     glViewport(0, 0, 800, 600);
     while(!glfwWindowShouldClose(window))
     {
-        bloom.Update();
-        bloom.Render();
     }
 
     glfwTerminate();

@@ -4,14 +4,12 @@
 //
 
 #pragma once
-#include "GLFW/glfw3.h"
+#include <GLFW/glfw3.h>
 
 namespace bloom {
 
-/**
- * \class Engine
- * \brief A class that represents the main engine for the bloom application.
- */
+/// \class Engine
+/// \brief Main engine class.
 class Engine {
 
     GLFWwindow* window; ///< Pointer to the GLFW window instance.
@@ -23,20 +21,14 @@ class Engine {
     void processInput(GLFWwindow* window);
 
 public:
-    /**
-     * \brief Constructs an Engine object with the given window.
-     * \param w Pointer to the GLFW window instance.
-     */
+    /// Constructor.
+    /// @param w Pointer to the GLFW window instance.
     explicit Engine(GLFWwindow* w);
 
-    /**
-     * \brief Updates the engine state.
-     */
+    /// \brief Update phase of the engine.
     void Update();
 
-    /**
-     * \brief Renders the engine output.
-     */
+    /// \brief Render phase of the engine.
     void Render();
 };
 

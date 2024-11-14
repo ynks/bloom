@@ -8,14 +8,16 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 add_executable(bloom_engine src/main.cpp
         src/keys.h
         src/glad.c
-        src/engine.cpp
-        src/engine.h)
+        src/bloom/engine.cpp
+        src/bloom/engine.h
+        src/catv/vector.h
+        src/catv/matrix.h
+        src/catv/lintr.h)
 
 # GLFW INCLUDE
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-
 add_subdirectory(lib/glfw)
 target_link_libraries(bloom_engine glfw)
 
