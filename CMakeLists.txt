@@ -8,8 +8,6 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 add_executable(bloom_engine src/main.cpp
         src/keys.h
         src/glad.c
-        src/bloom/engine.cpp
-        src/bloom/engine.h
         src/catv/vector.h
         src/catv/matrix.h
         src/catv/lintr.h)
