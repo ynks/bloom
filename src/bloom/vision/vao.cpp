@@ -1,6 +1,6 @@
 #include "vao.h"
 
-namespace bloom {
+namespace bloom::vision {
 
 VAO::VAO()
 {

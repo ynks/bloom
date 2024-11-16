@@ -9,7 +9,7 @@
 #pragma once
 #include "VBO.h"
 
-namespace bloom {
+namespace bloom::vision {
 
 class VAO {
 public:

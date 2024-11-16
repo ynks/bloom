@@ -60,13 +60,13 @@ int main()
   // Main loop
   glViewport(0, 0, Keys::Engine::SCR_WIDTH, Keys::Engine::SCR_HEIGHT);
 
-  bloom::Shader shaderProgram("../resources/shaders/default.vert", "../resources/shaders/default.frag");
+  bloom::vision::Shader shaderProgram("../resources/shaders/default.vert", "../resources/shaders/default.frag");
 
-  bloom::VAO vao1;
+  bloom::vision::VAO vao1;
   vao1.Bind();
 
-  bloom::VBO vbo1(vertices, sizeof(vertices));
-  bloom::EBO ebo1(indices, sizeof(indices));
+  bloom::vision::VBO vbo1(vertices, sizeof(vertices));
+  bloom::vision::EBO ebo1(indices, sizeof(indices));
 
   vao1.LinkVBO(vbo1, 0);
   vao1.Unbind();

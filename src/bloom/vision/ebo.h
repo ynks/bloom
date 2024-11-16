@@ -9,7 +9,7 @@
 #pragma once
 #include <glad/glad.h>
 
-namespace bloom {
+namespace bloom::vision {
 
 class EBO {
 public:
@@ -21,4 +21,4 @@ public:
   void Delete();
 };
 
-} // bloom
+}

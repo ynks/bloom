@@ -9,7 +9,7 @@
 #pragma once
 #include <glad/glad.h>
 
-namespace bloom {
+namespace bloom::vision {
 
 class VBO {
 public:

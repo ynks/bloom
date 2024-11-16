@@ -1,6 +1,6 @@
 #include "ebo.h"
 
-namespace bloom {
+namespace bloom::vision {
     
 EBO::EBO(unsigned int *vertices, GLsizeiptr size)
 {

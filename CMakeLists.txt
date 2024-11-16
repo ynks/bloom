@@ -18,7 +18,14 @@ add_executable(bloom_engine src/main.cpp
         src/bloom/vision/ebo.cpp
         src/bloom/vision/ebo.h
         src/bloom/vision/vao.cpp
-        src/bloom/vision/vao.h)
+        src/bloom/vision/vao.h
+)
+
+add_executable(catv src/math_cli.cpp
+        src/catv/vector.h
+        src/catv/matrix.h
+        src/catv/lintr.h
+)
 
 # GLFW INCLUDE
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)

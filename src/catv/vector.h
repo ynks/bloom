@@ -8,7 +8,6 @@
 
 #pragma once
 #include <cmath>
-#include "matrix.h"
 
 /**
  *  \namespace catv
@@ -109,17 +108,85 @@ struct Vector3
         return (len !=0)? Vector3(x/len, y/len, z/len) : Vector3();
     }
 
-    /// \brief Makes a 3x3 matrix from 3 vectors
-    ///
-    static Matrix3 MakeMatrix(const Vector3 a, const Vector3 b, const Vector3 c)
-    {
-        float matData[3][3] = {
-            {a.x, a.y, a.z},  // First row from Vector3 a
-            {b.x, b.y, b.z},  // Second row from Vector3 b
-            {c.x, c.y, c.z}   // Third row from Vector3 c
-        };
+#pragma endregion
 
-        return Matrix3(matData);
+};
+
+// xTODO: Write vector documentation
+struct Vector4
+{
+    float x, y, z, w; ///< x, y, z and w components of the vector
+
+    /// \brief Default constructor set to 0
+    Vector4() : x(0.0f), y(0.0f), z(0.0f) {}
+    /// \brief 3D constructor, w is defined as 1
+    /// \param x x component
+    /// \param y y component
+    /// \param z z component
+    Vector4(const float x, const float y, const float z) : x(x), y(y), z(z), w(1) {}
+    /// \brief 4D constructor
+    /// \param x x component
+    /// \param y y component
+    /// \param z z component
+    /// \param w w component
+    Vector4 (const float x, const float y, const float z, const float w) : x(x), y(y), z(z), w(w) {}
+
+#pragma region Operators
+
+    /// \brief Addition of two vectors
+    /// \param other Vector to add
+    Vector4 operator+(const Vector4& other) const
+    {
+        return {x + other.x, y + other.y, z + other.z, w + other.w};
+    }
+
+    /// \brief Subtraction of two vectors
+    /// \param other Vector to subtract
+    Vector4 operator-(const Vector4& other) const
+    {
+        return {x - other.x, y - other.y, z - other.z, w - other.w};
+    }
+
+    /// \brief Scalar multiplication of the vector
+    /// \param scalar Number to multiply the vector
+    Vector4 operator*(const float scalar) const
+    {
+        return {x * scalar, y * scalar, z * scalar, w * scalar};
+    }
+
+    /// \brief Scalar division of the vector
+    /// \param scalar Number to divide the vector
+    Vector4 operator/(const float scalar) const
+    {
+        return {x / scalar, y / scalar, z / scalar, w / scalar};
+    }
+
+    /// \brief Dot product between two vectors
+    /// \param a Vector a
+    /// \param b Vector b
+    /// \return Result of the computation
+    static float Dot(const Vector4& a, const Vector4& b)
+    {
+        return (a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w);
+    }
+
+#pragma endregion
+
+#pragma region Utilities
+
+    /// \brief Calculate the length of the vector
+    /// \return Length
+    [[nodiscard]] float Length() const
+    {
+        return std::sqrt(x * x + y * y + z * z + w * w);
+    }
+
+    /// \brief Normalizes the value of the vector so the length is 1
+    /// \return Normalized vector
+    [[nodiscard]] Vector4 Normalize() const
+    {
+        const float len = Length();
+        return (len !=0)? Vector4(x/len, y/len, z/len, w/len) : Vector4();
     }
 
 #pragma endregion

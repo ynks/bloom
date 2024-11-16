@@ -14,7 +14,7 @@
 #include <iostream>
 #include <cerrno>
 
-namespace bloom {
+namespace bloom::vision {
 
 std::string GetFileContents(const std::string& filename);
 

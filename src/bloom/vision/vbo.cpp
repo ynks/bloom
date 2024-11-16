@@ -1,6 +1,6 @@
 #include "vbo.h"
 
-namespace bloom {
+namespace bloom::vision {
 
 VBO::VBO(float *vertices, GLsizeiptr size)
 {
