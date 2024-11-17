@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <cmath>
+#include <stb/stb_image.h>
 #include <iostream>
 
 #include "keys.h"
@@ -27,11 +27,11 @@ int main()
 
   // Square vertices
   float vertices[] = {
-    -0.5f, -0.5f, 0.0f,
-    0.5f, -0.5f, 0.0f,
-    -0.5f,  0.5f, 0.0f,
-    0.5f,  0.5f, 0.0f,
-
+    // x      y     z     U     V
+    -0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
+     0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+    -0.5f,  0.5f, 0.0f, 0.0f, 0.0f,
+     0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
   };
 
   unsigned int indices[] = {
@@ -51,7 +51,7 @@ int main()
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
   // GLAD initialization
-  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+  if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
   {
     std::cerr << "Failed to initialize GLAD" << std::endl;
     return -1;
@@ -60,7 +60,7 @@ int main()
   // Main loop
   glViewport(0, 0, Keys::Engine::SCR_WIDTH, Keys::Engine::SCR_HEIGHT);
 
-  bloom::vision::Shader shaderProgram("../resources/shaders/default.vert", "../resources/shaders/default.frag");
+  bloom::vision::Shader shaderProgram("resources/shaders/default.vert", "resources/shaders/default.frag");
 
   bloom::vision::VAO vao1;
   vao1.Bind();
@@ -68,11 +68,32 @@ int main()
   bloom::vision::VBO vbo1(vertices, sizeof(vertices));
   bloom::vision::EBO ebo1(indices, sizeof(indices));
 
-  vao1.LinkVBO(vbo1, 0);
+  vao1.LinkAttrib(vbo1, 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)0);
+  vao1.LinkAttrib(vbo1, 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
   vao1.Unbind();
   vbo1.Unbind();
   ebo1.Unbind();
 
+  int widthImage, heightImage, numColCh;
+  unsigned char* image = stbi_load("resources/textures/flag.png", &widthImage, &heightImage, &numColCh, 4);
+
+  unsigned int texture;
+  glGenTextures(1, &texture);
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, texture);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImage, heightImage, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+  glGenerateMipmap(GL_TEXTURE_2D);
+
+  stbi_image_free(image);
+  glBindTexture(GL_TEXTURE_2D, 0);
+
+  unsigned int tex0Uniform = glGetUniformLocation(shaderProgram.ID, "tex0");
+  shaderProgram.Activate();
 
   while(!glfwWindowShouldClose(window))
   {
@@ -80,11 +101,12 @@ int main()
     processInput(window);
 
     // render
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+    glClearColor(0.11f, 0.11f, 0.11f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     // use the shader to render the triangle
     shaderProgram.Activate();
+    glBindTexture(GL_TEXTURE_2D, texture);
     vao1.Bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
@@ -97,6 +119,7 @@ int main()
   vao1.Delete();
   vbo1.Delete();
   ebo1.Delete();
+  glDeleteTextures(1, &texture);
   shaderProgram.Delete();
 
   glfwTerminate();

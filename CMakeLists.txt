@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 23)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
+# Engine
 add_executable(bloom_engine src/main.cpp
         src/keys.h
         src/glad.c
@@ -19,8 +20,17 @@ add_executable(bloom_engine src/main.cpp
         src/bloom/vision/ebo.h
         src/bloom/vision/vao.cpp
         src/bloom/vision/vao.h
+        include/stb/stb_image.h
+        src/bloom/stb.cpp
 )
 
+# add resource folder to build
+add_custom_command(
+        TARGET bloom_engine PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/resources ${CMAKE_BINARY_DIR}/resources
+)
+
+# Math library
 add_executable(catv src/math_cli.cpp
         src/catv/vector.h
         src/catv/matrix.h
@@ -36,5 +46,3 @@ target_link_libraries(bloom_engine glfw)
 
 find_package(OpenGL REQUIRED)
 target_link_libraries(bloom_engine OpenGL::GL)
-
-
