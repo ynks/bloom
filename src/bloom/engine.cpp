@@ -3,13 +3,11 @@
 namespace bloom {
 
 Engine::Engine()
-{
-
-}
+= default;
 
 Engine::~Engine()
 {
-
+  glfwTerminate();
 }
 
 void Engine::Begin(const int width, const int height, const char* title)
@@ -46,21 +44,22 @@ void Engine::Begin(const int width, const int height, const char* title)
   glViewport(0, 0, width, height);
 
   // Render shit
-  vao1.Bind();
+  shaderProgram = new vision::Shader("resources/shaders/default.vert", "resources/shaders/default.frag");
+  vao1 = new vision::VAO;
+  vbo1 = new vision::VBO(vertices, sizeof(vertices));
+  ebo1 = new vision::EBO(indices, sizeof(indices));
 
-  vision::VBO vbo1(vertices, sizeof(vertices));
-  vision::EBO ebo1(indices, sizeof(indices));
+  vao1->Bind();
 
-  vao1.LinkAttrib(vbo1, 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)0);
-  vao1.LinkAttrib(vbo1, 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-  vao1.Unbind();
-  vbo1.Unbind();
-  ebo1.Unbind();
+  vao1->LinkAttrib(vbo1, 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)nullptr);
+  vao1->LinkAttrib(vbo1, 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+  vao1->Unbind();
+  vbo1->Unbind();
+  ebo1->Unbind();
 
   int widthImage, heightImage, numColCh;
   unsigned char* image = stbi_load("resources/textures/cat.png", &widthImage, &heightImage, &numColCh, 4);
 
-  unsigned int texture;
   glGenTextures(1, &texture);
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, texture);
@@ -75,38 +74,40 @@ void Engine::Begin(const int width, const int height, const char* title)
   stbi_image_free(image);
   glBindTexture(GL_TEXTURE_2D, 0);
 
-  unsigned int tex0Uniform = glGetUniformLocation(shaderProgram.ID, "tex0");
-  shaderProgram.Activate();
+  unsigned int tex0Uniform = glGetUniformLocation(shaderProgram->ID, "tex0");
+  shaderProgram->Activate();
 }
 
 void Engine::Update()
 {
   // input
   ProcessInput(window);
+}
 
+void Engine::Render()
+{
   // render
   glClearColor(0.11f, 0.11f, 0.11f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 
   // use the shader to render the triangle
-  shaderProgram.Activate();
+  shaderProgram->Activate();
   glBindTexture(GL_TEXTURE_2D, texture);
-  vao1.Bind();
-  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+  vao1->Bind();
+  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, indices);
 
   // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
   glfwSwapBuffers(window);
   glfwPollEvents();
 }
 
-void Engine::Render()
-{
-
-}
-
 void Engine::Destroy()
 {
-
+  vao1->Delete();
+  vbo1->Delete();
+  ebo1->Delete();
+  glDeleteTextures(1, &texture);
+  shaderProgram->Delete();
 }
 
 /**

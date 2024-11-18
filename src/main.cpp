@@ -13,20 +13,15 @@ void processInput(GLFWwindow *window);
 int main()
 {
 
-  std::unique_ptr<bloom::Engine> bloom = std::make_unique<bloom::Engine>();
+  bloom::Engine bloom{};
+  bloom.Begin(800, 800, "bloom-engine");
 
-  while(!glfwWindowShouldClose(bloom->window))
+  while(!glfwWindowShouldClose(bloom.window))
   {
-
+    bloom.Update();
+    bloom.Render();
   }
 
-  // delete the shaders and vertex objects
-  vao1.Delete();
-  vbo1.Delete();
-  ebo1.Delete();
-  glDeleteTextures(1, &texture);
-  shaderProgram.Delete();
-
-  glfwTerminate();
+  bloom.Destroy();
   return 0;
 }

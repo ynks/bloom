@@ -7,8 +7,10 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # Engine
 add_executable(bloom_engine src/main.cpp
-        src/keys.h
         src/glad.c
+        src/bloom/keys.h
+        src/bloom/engine.h
+        src/bloom/engine.cpp
         src/catv/vector.h
         src/catv/matrix.h
         src/catv/lintr.h
@@ -22,8 +24,6 @@ add_executable(bloom_engine src/main.cpp
         src/bloom/vision/vao.h
         include/stb/stb_image.h
         src/bloom/stb.cpp
-        src/bloom/engine.h
-        src/bloom/engine.cpp
 )
 
 # add resource folder to build
