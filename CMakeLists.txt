@@ -22,11 +22,13 @@ add_executable(bloom_engine src/main.cpp
         src/bloom/vision/vao.h
         include/stb/stb_image.h
         src/bloom/stb.cpp
+        src/bloom/engine.h
+        src/bloom/engine.cpp
 )
 
 # add resource folder to build
 add_custom_command(
-        TARGET bloom_engine PRE_BUILD
+        TARGET bloom_engine POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/resources ${CMAKE_BINARY_DIR}/resources
 )
 
