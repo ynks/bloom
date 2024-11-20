@@ -2,11 +2,11 @@
 
 namespace bloom::vision {
     
-EBO::EBO(unsigned int *vertices, GLsizeiptr size)
+EBO::EBO(unsigned int* indices, GLsizeiptr size)
 {
   glGenBuffers(1, &ID);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ID);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
 }
 
 void EBO::Bind()

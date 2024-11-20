@@ -44,13 +44,12 @@ void Engine::Begin(const int width, const int height, const char* title)
   glViewport(0, 0, width, height);
 
   // Render shit
-  shaderProgram = new vision::Shader("resources/shaders/default.vert", "resources/shaders/default.frag");
+  shaderProgram = new vision::Shader(vision::DEFAULT_VERT, vision::DEFAULT_FRAG);
   vao1 = new vision::VAO;
   vbo1 = new vision::VBO(vertices, sizeof(vertices));
   ebo1 = new vision::EBO(indices, sizeof(indices));
 
   vao1->Bind();
-
   vao1->LinkAttrib(vbo1, 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)nullptr);
   vao1->LinkAttrib(vbo1, 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
   vao1->Unbind();

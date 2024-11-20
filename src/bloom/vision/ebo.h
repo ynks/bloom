@@ -14,7 +14,7 @@ namespace bloom::vision {
 class EBO {
 public:
   unsigned int ID;
-  EBO (unsigned int* vertices, GLsizeiptr size);
+  EBO (unsigned int* indices, GLsizeiptr size);
 
   void Bind();
   void Unbind();

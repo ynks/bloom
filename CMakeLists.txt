@@ -24,6 +24,12 @@ add_executable(bloom_engine src/main.cpp
         src/bloom/vision/vao.h
         include/stb/stb_image.h
         src/bloom/stb.cpp
+        src/bloom/vision/renderer.cpp
+        src/bloom/vision/renderer.h
+        src/bloom/object.h
+        src/bloom/object.cpp
+        src/bloom/actor.h
+        src/bloom/actor.cpp
 )
 
 # add resource folder to build

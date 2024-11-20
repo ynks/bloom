@@ -7,6 +7,7 @@
  */
 
 #pragma once
+
 #include <glad/glad.h>
 #include <string>
 #include <fstream>
@@ -46,5 +47,8 @@ public:
     void Activate();
     void Delete();
 };
+
+constexpr auto DEFAULT_FRAG = "resources/shaders/default.frag";
+constexpr auto DEFAULT_VERT = "resources/shaders/default.vert";
 
 }
