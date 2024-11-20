@@ -8,6 +8,7 @@
 
 #pragma once
 #include <iostream>
+#include <memory>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -17,6 +18,7 @@
 #include "vision/vao.h"
 #include "vision/vbo.h"
 #include "stb/stb_image.h"
+#include "vision/renderer.h"
 
 namespace bloom {
 
@@ -46,6 +48,8 @@ class Engine {
   vision::EBO* ebo1;
   unsigned int texture;
 
+  std::unique_ptr<vision::Renderer> renderer;
+
 public:
   Engine();
   ~Engine();
@@ -58,6 +62,7 @@ public:
 
   // Variables
   GLFWwindow* window;
+  [[nodiscard]] vision::Renderer* GetRenderer() const { return renderer.get(); }
 };
 
 }

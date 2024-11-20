@@ -19,6 +19,7 @@ class Actor : Object {
 
 public:
   Actor();
+  ~Actor() override;
 
   // Functions
   virtual void Render();

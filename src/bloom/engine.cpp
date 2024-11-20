@@ -3,7 +3,9 @@
 namespace bloom {
 
 Engine::Engine()
-= default;
+{
+  renderer = std::make_unique<vision::Renderer>();
+};
 
 Engine::~Engine()
 {

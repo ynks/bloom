@@ -7,22 +7,23 @@
  */
 
 #pragma once
+#include "engine.h"
 
 namespace bloom {
 
 class Object {
 
 public:
-  Object() = default;
+  Object();
   virtual ~Object() = default;
 
   // Functions
-  virtual void Begin();
-  virtual void Update();
-  virtual void Destroy();
+  virtual void Begin() {};
+  virtual void Update() {};
+  virtual void Destroy() {};
 
   // Variables
-
+  Engine* bloom = nullptr;
     
 private:
     

@@ -24,7 +24,8 @@ public:
   ~Renderer();
 
   // Functions
-  Shader* GetShader(char* name, char* vert, char* frag);
+  Shader* GetShader(const char* name, const char* vert, const char* frag);
+  void DeleteShader(const char* name);
 
   // Variables
     

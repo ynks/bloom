@@ -1,7 +1,8 @@
 #include "renderer.h"
 
 namespace bloom::vision {
-Shader* Renderer::GetShader(char* name, char* vert, char* frag)
+
+Shader* Renderer::GetShader(const char* name, const char* vert, const char* frag)
 {
   if (!compiledShaders.contains(name))
   {
@@ -9,7 +10,19 @@ Shader* Renderer::GetShader(char* name, char* vert, char* frag)
     compiledShaders.insert({name, _shader});
   }
 
-  return compiledShaders.at(name);
+  return compiledShaders[name];
 }
 
+void Renderer::DeleteShader(const char *name)
+{
+  const auto _shader = compiledShaders[name];
+  if (_shader == nullptr)
+  {
+    std::cout << "Shader " << name << " not found" << std::endl;
+    return;
+  }
+
+  _shader->Delete();
+  compiledShaders.erase(name);
+}
 }

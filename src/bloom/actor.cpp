@@ -1,5 +1,7 @@
 #include "actor.h"
 
+#include "vision/renderer.h"
+
 namespace bloom {
 
 Actor::Actor()
@@ -8,8 +10,22 @@ Actor::Actor()
   _vbo = new vision::VBO(vertices, sizeof(vertices));
   _ebo = new vision::EBO(indices, sizeof(indices));
 
-  _shader = new vision::Shader(vision::DEFAULT_VERT, vision::DEFAULT_FRAG);
+  _shader = bloom->GetRenderer()->GetShader("defaultShader", vision::DEFAULT_VERT, vision::DEFAULT_FRAG);
 }
+
+Actor::~Actor()
+{
+  _vao->Delete();
+  _vbo->Delete();
+  _ebo->Delete();
+
+  delete _vao;
+  delete _vbo;
+  delete _ebo;
+  delete _shader;
+}
+
+void Actor::Render() {}
 
 void Actor::Begin()
 {
@@ -24,7 +40,7 @@ void Actor::Begin()
   _ebo->Unbind();
 
   // xTODO: Texture things
-
+  _shader->Activate();
 }
 
 }

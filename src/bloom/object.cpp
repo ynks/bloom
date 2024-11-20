@@ -2,4 +2,6 @@
 
 namespace bloom {
 
+Object::Object() = default;
+
 }
